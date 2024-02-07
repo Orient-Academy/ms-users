@@ -2,6 +2,7 @@ package az.edu.orient.service;
 
 import java.util.List;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import az.edu.orient.entity.UserEntity;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final RedisTemplate<Integer, User> redisTemplate;
 
   public List<User> getAllUsers() {
      List<UserEntity> users = userRepository.findAll();
@@ -23,9 +25,15 @@ public class UserService {
   }
 
   public User getUserById(Integer id) {
+    if(redisTemplate.hasKey(id)) {
+      return redisTemplate.opsForValue().get(id);
+    }
+
     UserEntity userEntity =  userRepository.findById(id)
         .orElseThrow( () -> new UserNotFoundException("User By Id " + id + " is not found"));
-    return UserMapper.INSTANCE.toDto(userEntity);
+    User user = UserMapper.INSTANCE.toDto(userEntity);
+    redisTemplate.opsForValue().set(id, user);
+    return user;
   }
 
   public User save(User user) {
@@ -39,6 +47,7 @@ public class UserService {
         .orElseThrow( () -> new UserNotFoundException("User By Id " + id + " is not found"));
     UserMapper.INSTANCE.update(user, userEntity);
     UserEntity saved = userRepository.save(userEntity);
+    redisTemplate.delete(id);
     return UserMapper.INSTANCE.toDto(saved);
   }
 
@@ -46,6 +55,16 @@ public class UserService {
     userRepository.deleteById(id);
   }
 
+  public Integer sum(Integer a, Integer b) {
+    if(a == null ) {
+      return 0;
+    }
+
+    if(b == null) {
+      return 0;
+    }
+    return a+b;
+  }
 
 
 }

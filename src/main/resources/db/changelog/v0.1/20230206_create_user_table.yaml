@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user-table
+      author: murad.imanbayli
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: int
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+            tableName: user_entity
