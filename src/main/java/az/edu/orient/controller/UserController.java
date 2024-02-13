@@ -34,6 +34,11 @@ public class UserController {
     return userService.getAllUsers();
   }
 
+  @GetMapping("hello")
+  public String sayHello(){
+    return "Hello github actions";
+  }
+
   @GetMapping(path = "{id}")
   public User getUserById(@PathVariable int id){
     return userService.getUserById(id);
