@@ -1,15 +1,8 @@
 package az.edu.orient.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-
-import az.edu.orient.model.User;
-
-@Configuration
+//@Configuration
 public class RedisConfig {
-
+/*
   @Bean
   JedisConnectionFactory jedisConnectionFactory() {
     return new JedisConnectionFactory();
@@ -21,5 +14,5 @@ public class RedisConfig {
     template.setConnectionFactory(jedisConnectionFactory());
     return template;
   }
-
+*/
 }

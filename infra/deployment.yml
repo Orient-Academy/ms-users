@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-users
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-users
+  template:
+    metadata:
+      labels:
+        app: ms-users
+    spec:
+      containers:
+        - name: ms-users
+          image: 057196872298.dkr.ecr.us-east-2.amazonaws.com/ms-users:latest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always

@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://userdb1.c5g42usswain.us-east-2.rds.amazonaws.com:3306/userdb
+    username: admin
+    password: QAZqaz123
